@@ -1,0 +1,23 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- <style name="Base.Theme.ExpensesTraker" parent="Theme.Material3.DayNight.NoActionBar"> -->
+    <style name="Base.Theme.ExpensesTraker" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.ExpensesTraker" parent="Base.Theme.ExpensesTraker" />
+
+    <!-- Amount theme -->
+    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- Category theme. -->
+    <style name="MyTextInputLayout2" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+</resources>

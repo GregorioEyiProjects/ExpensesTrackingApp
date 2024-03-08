@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">ExpensesTracker</string>
+
+    <!--Header-->
+    <string name="user_name">Welcome back</string>
+    <string name="user_name2">0ln_m3</string>
+    <string name="total_balance">Total balance</string>
+    <string name="temporalPrice">0 THB</string>
+    <string name="currentAmount">Current amount</string>
+    <string name="currentAmountPrice">0 THB</string>
+    <string name="expenses">Total Expenses</string>
+    <string name="expensesPrice">1600 THB</string>
+
+    <!--Main activity -->
+    <string name="transactionHistory">Transaction History</string>
+    <string name="seeAll">See all</string>
+
+    <!--pop up menu -->
+    <string name="addingItemInfo">What would you like to add?</string>
+    <string name="btnExpense">Expense</string>
+    <string name="btnIncome">Income</string>
+
+    <!--pop up input -->
+    <string name="info">Enter the amount</string>
+    <string name="amount">Amount</string>
+    <string name="btnAdd">ADD</string>
+
+
+
+</resources>

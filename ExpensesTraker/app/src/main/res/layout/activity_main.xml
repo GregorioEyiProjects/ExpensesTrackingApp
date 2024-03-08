@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    tools:context=".MainActivity"
+    android:id="@+id/clMainActivity">
+
+
+    <!--                                      HEADER                                     -->
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+
+        <!--User info-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ct_header"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/header_shape"
+            android:padding="20sp"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/userInfo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:fontFamily="monospace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/userInfo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name2"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                app:layout_constraintTop_toBottomOf="@+id/userInfo1"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--card-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCard"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="-110dp"
+            android:background="@drawable/card_shape"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ct_header">
+
+            <TextView
+                android:id="@+id/tvExpenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expenses"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:fontFamily="monospace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvTotalExpensePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expensesPrice"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                app:layout_constraintTop_toBottomOf="@+id/tvExpenses"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <!--Current amount-->
+            <LinearLayout
+                android:id="@+id/llCurrentAmountInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalExpensePrice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/currentAmount"
+                    android:textColor="@color/white"
+                    android:fontFamily="monospace"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tvCurrentAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/currentAmountPrice"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="monospace"
+                    android:textSize="20sp"/>
+
+            </LinearLayout>
+
+            <!--Expenses-->
+            <LinearLayout
+                android:id="@+id/llTotalBalamce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalExpensePrice">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_balance"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="monospace"/>
+
+                <TextView
+                    android:id="@+id/tvTotalBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temporalPrice"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:fontFamily="monospace"/>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <!--                                      BODY                                     -->
+
+    <TextView
+        android:id="@+id/tvTransactionInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transactionHistory"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llHeader" />
+
+    <TextView
+        android:id="@+id/tvSeeAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seeAll"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:fontFamily="monospace"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llHeader"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcTransactionHistory"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="monospace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionInfo">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <!--                                      FOOTER                                     -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clFooter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcTransactionHistory"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/myButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_btn_add"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
