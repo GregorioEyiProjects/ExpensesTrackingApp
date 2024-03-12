@@ -75,8 +75,19 @@ class MainActivity : AppCompatActivity() {
         initListeners()
 
         // list to show in the dropdown
-        listOfOptions =
-            mutableListOf("Oishi", "Vending machine", "Food", "Transportation", "Big C", "Barbershop", "Tha tea", "Entrance", "Hospital", "Beer",  "Other")
+        listOfOptions = mutableListOf(
+            "Oishi",
+            "Vending machine",
+            "Food",
+            "Transportation",
+            "Big C",
+            "Barbershop",
+            "Tha tea",
+            "Entrance",
+            "Hospital",
+            "Beer",
+            "Other"
+        )
         dropdownAdapter = ArrayAdapter(this, R.layout.dropdown_item, listOfOptions)
 
         //firebase
@@ -85,27 +96,39 @@ class MainActivity : AppCompatActivity() {
         //Getting the data
         retrieveData()
 
+        //User info coming from the Auth UI
+        getUserInfo()
+
+    }
+
+    private fun getUserInfo():String {
+        val intent = intent.extras
+        val userID = intent?.getString("userID") ?: ""
+        binding.userInfo2.text = userID
+        return userID
     }
 
     private fun retrieveData() {
 
-        db.collection("Items")
+        val userID = getUserInfo()
+
+        db.collection("Users")
+            .document(userID)
+            .collection("items")
             .get()
             .addOnSuccessListener { result ->
                 // init the empty list
                 listOfItems = mutableListOf()
 
                 //var nextId = 1
-
                 for (document in result) {
                     println(result.toString())
                     val amount = document.data["amount"] as String
                     val category = document.data["category"] as String
                     val imageItem = document.data["itemImage"] as String
-
                     val newItem = Item(document.id, Integer.parseInt(amount), category, imageItem)
                     listOfItems.add(newItem)
-                   // nextId++
+                    // nextId++
                 }
 
                 // Recyclerview adapter
@@ -155,7 +178,8 @@ class MainActivity : AppCompatActivity() {
         reversedList = uniqueList
 
         //Initializing the adapter
-        itemAdapter = ItemAdapter(uniqueList, onClickDelete = { position -> onDeleteItem(position) })
+        itemAdapter =
+            ItemAdapter(uniqueList, onClickDelete = { position -> onDeleteItem(position) })
 
         // initializing the recyclerView created
         val recyclerView: RecyclerView = binding.rcTransactionHistory
@@ -174,7 +198,8 @@ class MainActivity : AppCompatActivity() {
         for (item in listOfItems) {
             val category = item.category
             if (groupedItems.containsKey(category)) {
-                val existingItem = groupedItems[category]!! // Category exists, update existing item with new amount
+                val existingItem =
+                    groupedItems[category]!! // Category exists, update existing item with new amount
                 //existingItem.names.add(item.toString())
                 existingItem.amount += item.amount
             } else {
@@ -194,8 +219,8 @@ class MainActivity : AppCompatActivity() {
         deleteItemFromFirebase(documentId)
 
         //changing the total expense value
-        val currentExpense:Int = Integer.parseInt(binding.tvTotalExpensePrice.text.toString())
-        val newCurrentExpense =   currentExpense - item.amount
+        val currentExpense: Int = Integer.parseInt(binding.tvTotalExpensePrice.text.toString())
+        val newCurrentExpense = currentExpense - item.amount
         binding.tvTotalExpensePrice.text = newCurrentExpense.toString()
 
         //deleting the value
@@ -207,11 +232,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteItemFromFirebase(documentId: String) {
 
-       db.collection("Items")
-           .document(documentId)
-           .delete()
-           .addOnSuccessListener { Log.d("TAG", "Success on delete!") }
-           .addOnFailureListener { errorMessage-> Log.d("TAG", "Failure on delete! $errorMessage") }
+        db.collection("Items")
+            .document(documentId)
+            .delete()
+            .addOnSuccessListener { Log.d("TAG", "Success on delete!") }
+            .addOnFailureListener { errorMessage ->
+                Log.d(
+                    "TAG",
+                    "Failure on delete! $errorMessage"
+                )
+            }
     }
 
     private fun initListeners() {
@@ -220,11 +250,18 @@ class MainActivity : AppCompatActivity() {
             createPopUpMenu()
             binding.clMainActivity.setBackgroundColor(getColor(R.color.gray))
         }
-        binding.tvSeeAll.setOnClickListener { Toast.makeText(this, "Not working yet!", Toast.LENGTH_SHORT).show() }
+        binding.tvSeeAll.setOnClickListener {
+            Toast.makeText(
+                this,
+                "Not working yet!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun createPopUpMenu() {
-        inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater // this is how the cast in kotlin
+        inflater =
+            getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater // this is how the cast in kotlin
         popUpView = inflater.inflate(R.layout.pop_up_menu, null)
 
         val with: Int = ViewGroup.LayoutParams.MATCH_PARENT
@@ -308,63 +345,108 @@ class MainActivity : AppCompatActivity() {
             val amount = etAmount.text.toString()
             val category = tvMenuOptions.text.toString()
             val image = getImage(category)
+            val itemLocation = getItemLocation()
+            val itemDate = getItemDate()
 
             val item = hashMapOf(
                 "amount" to amount,
                 "category" to category,
-                "itemImage" to image
+                "itemImage" to image,
+                "Location" to itemLocation,
+                "itemDate" to itemDate
             )
 
-            db.collection("Items")
-                .add(item)
+            //Getting the ID from the login/signUp activity
+            //val userIDReceived: String? = intent.getStringExtra("userID")
+            val intent = intent.extras
+            val userIDReceived = intent?.getString("userID") ?: ""
+            Log.i("MAIN ACTIVITY", "The value of the user ID is $userIDReceived")
+
+           /*
+            val userRef = db.collection("Users").document(userIDReceived)
+            userRef.set(item)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(
-                        TAG,
-                        "DocumentSnapshot added with ID: ${documentReference.id}"
-                    )
+                    Log.d(TAG,"DocumentSnapshot added with ID: $documentReference")
                 }
-                .addOnFailureListener { e -> Log.w(TAG, "Error adding document", e) }
+                .addOnFailureListener { e -> Log.e("MAIN ACTIVITY","Error adding a new ITEM", e )}
+            */
+
+            // val userRef = docRef?.let { it1 -> db.collection("Users").document(it1) }
+            /*db.collection("Users")
+                 .add(item)// this one create unique ID for each item in the collection
+                 .addOnSuccessListener { documentReference -> Log.d(TAG,"DocumentSnapshot added with ID: ${documentReference.id}") }
+                 .addOnFailureListener { e -> Log.w(TAG, "Error adding document", e) }*/
+
+            /*
+            // Create a new collection for the user
+            val userItemsCollection = db.collection("Users").document(userIDReceived)
+            userItemsCollection.set(item)
+                .addOnSuccessListener { documentReference -> Log.i("MAIN ACTIVITY","DocumentSnapshot added with ID: ${documentReference}") }
+                .addOnFailureListener { e -> Log.e(TAG, "Error adding document", e) }*/
+
+            val userItemsCollection = db.collection("Users").document(userIDReceived).collection("items")
+            userItemsCollection.add(item)
+                .addOnSuccessListener { documentReference -> Log.i("MAIN ACTIVITY","DocumentSnapshot added with ID: ${documentReference}") }
+                .addOnFailureListener { e -> Log.e(TAG, "Error adding document", e) }
+
             popupWindow.dismiss()
             binding.clMainActivity.setBackgroundColor(getColor(R.color.white))
             retrieveData()
         }
 
-
     }
 
-    private fun getImage(imageItem: String):String {
-        var imageItemValue:String = ""
-        imageItemValue = when(imageItem){
+    private fun getItemLocation(): String {
+        return "return a real location of the item here"
+    }
+
+    private fun getItemDate(): String {
+        return "return a real date of the item here"
+    }
+
+    private fun getImage(imageItem: String): String {
+        var imageItemValue: String = ""
+        imageItemValue = when (imageItem) {
             "Oishi" -> {
                 "https://i.pinimg.com/564x/eb/22/14/eb2214c7b3ca1d73351aec2b59c0cf9b.jpg"
             }
+
             "Vending machine" -> {
                 "https://i.pinimg.com/564x/2a/de/98/2ade98f922ea34ccf9cf10b8840f8537.jpg"
             }
+
             "Food" -> {
                 "https://i.pinimg.com/564x/31/3c/91/313c91d393779eaaa7f39a5e00eb7811.jpg"
             }
+
             "Transportation" -> {
                 "https://i.pinimg.com/564x/04/6b/38/046b3884bbd9d16ba053a80c95b8f295.jpg"
             }
+
             "Big C" -> {
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/BigCLogo2022.svg/1200px-BigCLogo2022.svg.png"
             }
+
             "Barbershop" -> {
                 "https://i.pinimg.com/564x/b2/cd/6d/b2cd6d756f17bcfb2a414e188f072e54.jpg"
             }
-            "Tha tea" ->{
+
+            "Tha tea" -> {
                 "https://i.pinimg.com/564x/52/ed/ac/52edac68c6e30554a5faef16fd3a3aa9.jpg"
             }
-            "Entrance" ->{
+
+            "Entrance" -> {
                 "https://i.pinimg.com/564x/41/59/77/415977fa0031e50a4d56ef456ca88a9b.jpg"
             }
+
             "Beer" -> {
                 "https://i.pinimg.com/564x/6a/1b/0f/6a1b0f3ad643b5d9a8cc65d7b08c3bf2.jpg"
             }
-            "Hospital" ->{
+
+            "Hospital" -> {
                 "https://i.pinimg.com/564x/27/8a/99/278a99ac7ece24bfcc4e00b469270a79.jpg"
             }
+
             else -> {
                 "https://i.pinimg.com/564x/5d/50/dc/5d50dcb5416a1abdcc6d09dc118504e0.jpg"
             }

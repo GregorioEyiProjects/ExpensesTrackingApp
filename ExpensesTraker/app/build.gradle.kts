@@ -50,6 +50,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))  // Import the Firebase BoM
     implementation("com.google.firebase:firebase-analytics") //
     implementation("com.google.firebase:firebase-firestore:24.10.3") //firebase for the database
+    implementation("com.google.firebase:firebase-auth") // firebase auth
     implementation ("com.github.bumptech.glide:glide:4.16.0") // to load images
     //implementation("androidx.navigation:navigation-compose:2.7.7") // creo que es para jetpackCompose
     testImplementation("junit:junit:4.13.2")
